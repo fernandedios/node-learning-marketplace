@@ -19,9 +19,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended:true })); // read utf-8 encoded
 app.use(morgan('dev'));
 
-app.get('/', (req, res, next) => {
-  res.send('home');
-});
+require('./routes/main')(app);
 
 app.listen(secret.port, (err) => {
   if(err) {
