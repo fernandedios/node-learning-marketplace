@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const engine = require('ejs-mate');
+const passport = require('passport');
 
 const app = express();
 const secret = require('./config/secret');
@@ -24,6 +25,8 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended:true })); // read utf-8 encoded
 app.use(morgan('dev'));
+app.use(passport.initialize());
+app.use(passport.session());
 
 require('./routes/main')(app);
 
