@@ -5,6 +5,9 @@ const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const engine = require('ejs-mate');
 const passport = require('passport');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const MongoStore = require('connnect-mongo')(session);
 
 const app = express();
 const secret = require('./config/secret');
@@ -25,6 +28,16 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended:true })); // read utf-8 encoded
 app.use(morgan('dev'));
+app.use(cookieParser()); // read cookies from browser
+
+// store sessions to db
+app.use(session({
+  resave: true,
+  saveUninitialized: true,
+  secret: secret.secretKey,
+  store: new MongoStore({ url: secret.database, autoReconnect: true })
+}));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
