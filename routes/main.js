@@ -1,5 +1,5 @@
 module.exports = (app) => {
   app.get('/', (req, res, next) => {
-    res.send('home');
+    res.render('main/home');
   });
 };
