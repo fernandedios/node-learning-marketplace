@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   email: { type: String, unique: true, lowercase:true },
   facebook: String,
-  token: Array,
+  tokens: Array,
 
   profile: {
     name: { type: String, default: '' },
@@ -20,4 +20,4 @@ const UserSchema = new Schema({
   }]
 });
 
-module.exports = mongoose.models('User', UserSchema);
+module.exports = mongoose.model('User', UserSchema);

@@ -7,7 +7,7 @@ const engine = require('ejs-mate');
 const passport = require('passport');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const MongoStore = require('connnect-mongo')(session);
+const MongoStore = require('connect-mongo')(session);
 
 const app = express();
 const secret = require('./config/secret');
@@ -41,7 +41,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// routes
 require('./routes/main')(app);
+require('./routes/userRoutes')(app);
 
 app.listen(secret.port, (err) => {
   if(err) {

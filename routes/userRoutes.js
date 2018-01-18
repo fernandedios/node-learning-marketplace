@@ -2,6 +2,10 @@ const passport = require('passport');
 const passportConf = require('../middlewares/passport');
 
 module.exports = (app) => {
+  app.get('/login', (req, res, next) => {
+    res.render('accounts/login');
+  });
+
   app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
 
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {
