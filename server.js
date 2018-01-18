@@ -8,9 +8,11 @@ const passport = require('passport');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const MongoStore = require('connect-mongo')(session);
+const flash = require('express-flash');
 
 const app = express();
 const secret = require('./config/secret');
+const userMiddleware = require('./middlewares/userMiddleware');
 
 mongoose.connect(secret.database, (err) => {
   if(err) {
@@ -40,6 +42,8 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
+app.use(userMiddleware); // get access to user object 
 
 // routes
 require('./routes/main')(app);

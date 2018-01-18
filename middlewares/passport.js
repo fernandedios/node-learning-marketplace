@@ -24,6 +24,8 @@ passport.use(new FacebookStrategy(facebook, (req, token, refreshToken, profile, 
     }
 
     if(user) {
+      req.flash('loginMessage', 'Successfully logged in with Facebook'); // send message to ejs
+
       return done(null, user);
     }
     else {
@@ -38,6 +40,8 @@ passport.use(new FacebookStrategy(facebook, (req, token, refreshToken, profile, 
         if(err) {
           throw err;
         }
+
+        req.flash('loginMessage', 'Successfully logged in with Facebook');
         return done(null, newUser);
       });
     }

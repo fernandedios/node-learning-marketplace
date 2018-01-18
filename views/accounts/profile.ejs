@@ -1,1 +1,19 @@
 <% layout('boilerplate') %>
+
+<div class="container py-4">
+  <div class="row">
+    <div class="col">
+      <% if (message.length > 0) { %>
+        <div class="alert alert-success alert-dismissable">
+          <button class="close" type="button" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times</span>
+          </button>
+          <%= message %>
+        </div>
+      <% } %>
+
+      <p><%= user.profile.name %></p>
+      <img src="<%= user.profile.picture %>">
+    </div>
+  </div>
+</div>

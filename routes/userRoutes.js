@@ -19,7 +19,7 @@ module.exports = (app) => {
   });
 
   app.get('/profile', (req, res, next) => {
-    res.render('accounts/profile');
+    res.render('accounts/profile', { message: req.flash('loginMessage') }); //receive loginMessage
   });
 
 };
