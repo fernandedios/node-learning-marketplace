@@ -2,6 +2,9 @@ const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 
 const { facebook } = require('../config/secret');
+const async = require('async');
+const request = require('request');
+
 const User = require('../models/user')
 
 // store id to session
@@ -29,21 +32,48 @@ passport.use(new FacebookStrategy(facebook, (req, token, refreshToken, profile, 
       return done(null, user);
     }
     else {
-      const newUser = new User();
-      newUser.email = profile._json.email;
-      newUser.facebook = profile.id;
-      newUser.tokens.push({ kind: 'facebook', token });
-      newUser.profile.name = profile.displayName;
-      newUser.profile.picture = `https://graph.facebook.com/${profile.id}/picture?type=large`;
+      // execute array of functions in series
+      async.waterfall([
+        (callback) => {
+          const newUser = new User();
+          newUser.email = profile._json.email;
+          newUser.facebook = profile.id;
+          newUser.tokens.push({ kind: 'facebook', token });
+          newUser.profile.name = profile.displayName;
+          newUser.profile.picture = `https://graph.facebook.com/${profile.id}/picture?type=large`;
 
-      newUser.save((err) => {
-        if(err) {
-          throw err;
+          newUser.save((err) => {
+            if(err) throw err;
+
+            req.flash('loginMessage', 'Successfully logged in with Facebook');
+            callback(err, newUser);
+          });
+        },
+
+        (newUser, callback) => {
+          // mailchimp request
+          request({
+            url: 'https://us17.api.mailchimp.com/3.0/lists/2cc6af2c3b/members',
+            method: 'POST',
+            headers: {
+              'Authorization': 'randomUser 4b646e1d71f19f745f5fbf99cf803d0a-us17',
+              'Content-Type': 'application/json'
+            },
+            json: {
+              'email_address': newUser.email,
+              'status': 'subscribed'
+            }
+          }, (err, response, body) => {
+            if (err) {
+              return done(err, newUser);
+            }
+            else {
+              console.log('Success');
+              return done(null, newUser);
+            }
+          });
         }
-
-        req.flash('loginMessage', 'Successfully logged in with Facebook');
-        return done(null, newUser);
-      });
+      ]);
     }
   });
 }));
