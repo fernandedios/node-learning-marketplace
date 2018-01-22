@@ -10,7 +10,9 @@
       <% if (!user) { %>
         <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
       <% } else { %>
+        <li class="nav-item"><a class="nav-link" href="/become-an-instructor">Become an Instructor</a></li>
         <li class="nav-item"><a class="nav-link" href="/profile"><%= user.profile.name %></a></li>
+        <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
       <% }  %>
     </ul>
   </div>
