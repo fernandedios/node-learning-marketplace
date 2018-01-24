@@ -10,7 +10,20 @@
       <% if (!user) { %>
         <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
       <% } else { %>
-        <li class="nav-item"><a class="nav-link" href="/become-an-instructor">Become an Instructor</a></li>
+
+        <% if (user.role === "teacher") { %>
+          <li>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              Instructor
+            </a>
+            <ul class="dropdown-menu">
+              <li class="nav-item"><a class="nav-link" href="/teacher/dashboard">Instructor's Dashboard</a></li>
+              <li class="nav-item"><a class="nav-link" href="/revenue-report">Revenue Report</a></li>
+            </ul>
+          </li>
+        <% } else { %>
+          <li class="nav-item"><a class="nav-link" href="/become-an-instructor">Become an Instructor</a></li>
+        <% } %>
         <li class="nav-item"><a class="nav-link" href="/profile"><%= user.profile.name %></a></li>
         <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
       <% }  %>
