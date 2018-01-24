@@ -43,11 +43,12 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-app.use(userMiddleware); // get access to user object 
+app.use(userMiddleware); // get access to user object
 
 // routes
 require('./routes/main')(app);
 require('./routes/userRoutes')(app);
+require('./routes/teacherRoutes')(app);
 
 app.listen(secret.port, (err) => {
   if(err) {

@@ -2,3 +2,13 @@
 body {
   padding-top: 3.5rem;
 }
+
+.bg {
+  /* background: url('https://static.pexels.com/photos/425/apple-iphone-desk-office.jpg') no-repeat center center; */
+  position: fixed;
+  width: 100%;
+  height: 350px;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
