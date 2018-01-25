@@ -39,7 +39,7 @@ module.exports = (app) => {
       User.findOne({ _id: req.user.id })
         .populate('coursesTeach.course') // get/populate data for the coursesTeach.course objects
         .exec((err, foundUser) => { // pass callback
-          res.render('teacher/teacher-dashboard', { foundUser })
-        })
+          res.render('teacher/teacher-dashboard', { foundUser });
+        });
     });
 };

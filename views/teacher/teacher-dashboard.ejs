@@ -1,0 +1,36 @@
+<% layout('boilerplate') %>
+
+<div class="container py-4">
+  <div class="row">
+    <div class="col">
+      <div class="bg"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <a href="/create-course">Create a New Course</a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <h2>Courses that you teach</h2>
+      <hr>
+
+      <% for (var i = 0; i < foundUser.coursesTeach.length; i++) { %>
+        <div class="card" style="width: 300px;">
+          <div class="card-header">
+            <a href="/courses/<%= foundUser.coursesTeach[i].course._id %>">
+              <%= foundUser.coursesTeach[i].course.title %>
+            </a>
+          </div>
+          <div class="card-block">
+            <p class="card-text text-center p-3"><%= foundUser.coursesTeach[i].course.desc %></p>
+            <a href="/edit-course/<%= foundUser.coursesTeach[i].course._id %>" class="btn btn-block btn-primary">Edit Course</a>
+          </div>
+        </div>
+      <%  } %>
+    </div>
+  </div>
+</div>
