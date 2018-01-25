@@ -33,5 +33,13 @@ module.exports = (app) => {
           })
         }
       ])
-    })
+    });
+
+    app.get('/teacher/dashboard', (req, res, next) => {
+      User.findOne({ _id: req.user.id })
+        .populate('coursesTeach.course') // get/populate data for the coursesTeach.course objects
+        .exec((err, foundUser) => { // pass callback
+          res.render('teacher/teacher-dashboard', { foundUser })
+        })
+    });
 };
