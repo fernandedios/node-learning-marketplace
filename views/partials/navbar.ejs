@@ -12,13 +12,13 @@
       <% } else { %>
 
         <% if (user.role === "teacher") { %>
-          <li>
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
               Instructor
             </a>
             <ul class="dropdown-menu">
-              <li class="nav-item"><a class="nav-link" href="/teacher/dashboard">Instructor's Dashboard</a></li>
-              <li class="nav-item"><a class="nav-link" href="/revenue-report">Revenue Report</a></li>
+              <li class="nav-item"><a class="dropdown-item" href="/teacher/dashboard">Instructor's Dashboard</a></li>
+              <li class="nav-item"><a class="dropdown-item" href="/revenue-report">Revenue Report</a></li>
             </ul>
           </li>
         <% } else { %>
