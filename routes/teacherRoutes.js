@@ -42,4 +42,37 @@ module.exports = (app) => {
           res.render('teacher/teacher-dashboard', { foundUser });
         });
     });
+
+    // parent route
+    app.route('/create-course')
+      // render page
+      .get((req, res, next) => {
+        res.render('teacher/create-course');
+      })
+
+      // create new course
+      .post((req, res, next) => {
+        async.waterfall([
+          (callback) => {
+            let course = new Course();
+            course.title = req.body.title;
+            course.price = req.body.price;
+            course.wistiaId = req.body.wistiaId;
+            course.ownByTeacher = req.user._id;
+            course.save((err) => {
+              callback(err, course);
+            });
+          },
+
+          (course, callback) => {
+            User.findOne({ _id: req.user._id }, (err, foundUser) => {
+              foundUser.coursesTeach.push({ course: course._id });
+              foundUser.save((err) => {
+                if(err) return next(err);
+                res.redirect('/teacher/dashboard');
+              });
+            })
+          }
+        ])
+      });
 };
