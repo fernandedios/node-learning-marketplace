@@ -57,6 +57,7 @@ module.exports = (app) => {
             let course = new Course();
             course.title = req.body.title;
             course.price = req.body.price;
+            course.desc = req.body.desc;
             course.wistiaId = req.body.wistiaId;
             course.ownByTeacher = req.user._id;
             course.save((err) => {
