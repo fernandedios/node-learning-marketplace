@@ -87,6 +87,7 @@ module.exports = (app) => {
       .post((req, res, next) => {
         Course.findOne({ _id: req.params.id }, (err, foundCourse) => {
           if (foundCourse) {
+            // update only if value is found
             if (req.body.title) foundCourse.title = req.body.title;
             if (req.body.wistiaId) foundCourse.wistiaId = req.body.wistiaId;
             if (req.body.price) foundCourse.price = req.body.price;
@@ -99,4 +100,15 @@ module.exports = (app) => {
           }
         });
       });
+
+    app.get('/revenue-report', (req, res, next) => {
+      let revenue = 0;
+      User.findOne({ _id: req.user._id }, (err, foundUser) => {
+        foundUser.revenue.forEach((value) => {
+          revenue += value;
+        });
+
+        res.render('teacher/revenue-report', { revenue });
+      });
+    });
 };

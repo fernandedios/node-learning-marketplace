@@ -17,6 +17,10 @@ const UserSchema = new Schema({
 
   coursesTaken: [{
     course: { type: Schema.Types.ObjectId, ref: 'Course' }
+  }],
+
+  revenue: [{
+    money: Number
   }]
 });
 
