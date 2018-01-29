@@ -77,12 +77,12 @@ module.exports = (app) => {
         ])
       });
 
-    app.route('/edit-course')
+    app.route('/edit-course/:id')
       .get((req, res, next) => {
         Course.findOne({ _id: req.params.id }, (err, foundCourse) => {
           res.render('teacher/edit-course', { course: foundCourse });
         });
-      });
+      })
 
       .post((req, res, next) => {
         Course.findOne({ _id: req.params.id }, (err, foundCourse) => {
