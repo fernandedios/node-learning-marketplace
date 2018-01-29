@@ -76,4 +76,27 @@ module.exports = (app) => {
           }
         ])
       });
+
+    app.route('/edit-course')
+      .get((req, res, next) => {
+        Course.findOne({ _id: req.params.id }, (err, foundCourse) => {
+          res.render('teacher/edit-course', { course: foundCourse });
+        });
+      });
+
+      .post((req, res, next) => {
+        Course.findOne({ _id: req.params.id }, (err, foundCourse) => {
+          if (foundCourse) {
+            if (req.body.title) foundCourse.title = req.body.title;
+            if (req.body.wistiaId) foundCourse.wistiaId = req.body.wistiaId;
+            if (req.body.price) foundCourse.price = req.body.price;
+            if (req.body.desc) foundCourse.desc = req.body.desc;
+
+            foundCourse.save((err) => {
+              if (err) return next(err);
+              res.redirect('/teacher/dashboard');
+            });
+          }
+        });
+      });
 };
