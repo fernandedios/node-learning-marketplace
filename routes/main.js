@@ -1,3 +1,5 @@
+const async = require('async');
+
 const Course = require('../models/course');
 const User = require('../models/user');
 
@@ -15,9 +17,11 @@ module.exports = (app) => {
   app.get('/courses/:id', (req, res, next) => {
     async.parallel([
       (callback) => {
-        Course.findOne({ _id: req.params.id }, (err, foundCourse) => {
-          callback(err, foundCourse);
-        });
+        Course.findOne({ _id: req.params.id })
+          .populate('ownByStudent.user')
+          .exec((err, foundCourse) => {
+            callback(err, foundCourse);
+          });
       },
 
       (callback) => {

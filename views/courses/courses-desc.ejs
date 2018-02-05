@@ -1,0 +1,44 @@
+<% layout('boilerplate') %>
+
+<div class="container py-4">
+  <div class="row">
+    <div class="col">
+      <div class="bg"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <h2><%= course.title %></h2>
+      <hr>
+
+      <div class="row">
+        <div class="col-lg-7">
+          <h2>Description</h2>
+          <p><%= course.desc %></p>
+        </div>
+
+        <div class="col-lg-7">
+          <h2>Enrolled Students</h2>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Students
+            </div>
+            <div class="panel-body">
+              <% if(courses.ownByStudent.length === 0) { %>
+                <p>0</p>
+              <% } %>
+              <% else { %>
+                <% for(var i = 0; i < course.ownByStudent.length; i++) { %>
+                  <div class="col-xs-2">
+                    <img src="<%= course.ownByStudent[i].user.profile.picture %>" />
+                  </div>
+                <% } %>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
