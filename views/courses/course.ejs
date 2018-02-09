@@ -9,7 +9,36 @@
 
   <div class="row">
     <div class="col">
-      <h2>In the Course</h2>
+      <h2><%= course.title %></h2>
+      <p><%= course.desc %></p>
     </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+
+      <div id="wistia_<%= course.wistiaId %>" class="wistia_embed" style="width:640px;height:360px;" data-video-width="640" data-video-height="360">&nbsp;</div>
+        <script charset="ISO-8859-1" src="//fast.wistia.com/assets/external/playlist-v1.js"></script>
+        <script>
+        wistiaPlaylist = Wistia.playlist("<%= course.wistiaId %>", {
+          version: "v1",
+          theme: "tab",
+          videoOptions: {
+            volumeControl: true,
+            playerColor: "54bbff",
+            autoPlay: true,
+            videoWidth: "640",
+            videoHeight: "360",
+            inlineOptionsOnly: true,
+            version: "v1"
+          },
+          videoFoam: "true",
+          media_0_0: {
+            autoPlay: false,
+            controlsVisibleOnLoad: false
+          }
+        });
+        </script>
+      </div>
   </div>
 </div>
