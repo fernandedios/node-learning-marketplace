@@ -6,6 +6,9 @@ const CourseSchema = new Schema({
   desc: String,
   wistiaId: String,
   price: Number,
+  features: [
+    { type: String, default: '' }
+  ],
   ownByTeacher: { type: Schema.Types.ObjectId, ref: 'User' },
   ownByStudent: [{
     user: { type: Schema.Types.ObjectId, ref: 'User' }
