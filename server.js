@@ -49,6 +49,7 @@ app.use(userMiddleware); // get access to user object
 require('./routes/main')(app);
 require('./routes/userRoutes')(app);
 require('./routes/teacherRoutes')(app);
+require('./routes/paymentRoutes')(app);
 
 app.listen(secret.port, (err) => {
   if(err) {

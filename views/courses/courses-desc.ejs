@@ -9,7 +9,24 @@
 
   <div class="row">
     <div class="col">
-      <h2><%= course.title %></h2>
+
+      <div class="row">
+        <div class="col-lg-6 col-md-offset-3">
+          <form action="/payment" method="POST">
+            <input type="hidden" name="courseId" value="<%= course._id %>">
+            <script
+              src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key="pk_test_MtUntAiIwyeqm7njBAOdkqKg"
+              data-amount="<%= course.price %>"
+              data-name="elearning"
+              data-description="Widget"
+              data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+              data-locale="auto">
+            </script>
+          </form>
+        </div>
+      </div>
+
       <hr>
 
       <div class="row">
@@ -25,10 +42,9 @@
               Students
             </div>
             <div class="panel-body">
-              <% if(courses.ownByStudent.length === 0) { %>
+              <% if (course.ownByStudent.length === 0) { %>
                 <p>0</p>
-              <% } %>
-              <% else { %>
+              <% } else { %>
                 <% for(var i = 0; i < course.ownByStudent.length; i++) { %>
                   <div class="col-xs-2">
                     <img src="<%= course.ownByStudent[i].user.profile.picture %>" />

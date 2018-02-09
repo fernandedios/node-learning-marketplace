@@ -56,7 +56,7 @@ module.exports = (app) => {
 
       // user is not taking course, and is not the teacher
       if (userCourse === null && teacherCourse === null) {
-        res.render('courses/courseDesc', { course });
+        res.render('courses/courses-desc', { course });
       }
 
       // user is the teacher of the course

@@ -2,8 +2,8 @@ const secret = require('../config/secret');
 const stripe = require('stripe')(secret.stripeSecretKey);
 const async = require('async');
 
-const Course require('./models/course');
-const User = require('./models/user');
+const Course = require('../models/course');
+const User = require('../models/user');
 
 module.exports = (app) => {
   app.post('/payment', (req, res, next) => {
@@ -21,7 +21,7 @@ module.exports = (app) => {
       },
 
       // initiate stripe payment
-      (callback) => {
+      (foundCourse, callback) => {
         stripe.customers.create({
           source: stripeToken,
           email: req.user.email
@@ -46,8 +46,8 @@ module.exports = (app) => {
                     },
                     {
                       $push: { ownByStudent: { user: req.user._id }},
-                      $inc: { totalStudents: 1}
-                    }, (err, count) {
+                      $inc: { totalStudents: 1 }
+                    }, (err, count) => {
                       if (err) return next(err);
                       callback(err); // no need to pass the count
                     })
