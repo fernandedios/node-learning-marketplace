@@ -8,7 +8,9 @@ const UserSchema = new Schema({
   role: String,
   profile: {
     name: { type: String, default: '' },
-    picture: { type: String, default: '' }
+    title: { type: String, default: '' },
+    picture: { type: String, default: '' },
+    desc: { type: String, default: '' }
   },
 
   coursesTeach: [{
