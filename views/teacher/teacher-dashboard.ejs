@@ -1,23 +1,16 @@
 <% layout('boilerplate') %>
 
 <div class="container py-4">
-  <div class="row">
-    <div class="col">
-      <div class="bg"></div>
+  <div class="jumbotron">
+    <div class="container">
+      <h3 class="display-5">Courses that you teach</h3>
+      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+      <p><a href="/create-course" class="btn btn-primary">Create a New Course</a></p>
     </div>
   </div>
 
   <div class="row">
     <div class="col">
-      <a href="/create-course" class="btn btn-primary">Create a New Course</a>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <h2>Courses that you teach</h2>
-      <hr>
-
       <div class="row">
         <% for (var i = 0; i < foundUser.coursesTeach.length; i++) { %>
           <div class="col-md-4">
