@@ -2,7 +2,7 @@ const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const axios = require('axios');
 
-const { facebook } = require('../config/secret');
+const { mailchimpKey, facebook } = require('../config/secret');
 const User = require('../models/user')
 
 // store id to session
@@ -43,7 +43,7 @@ passport.use(new FacebookStrategy(facebook, async (req, token, refreshToken, pro
             status: 'subscribed',
 
             headers: {
-              'Authorization': 'randomUser 4b646e1d71f19f745f5fbf99cf803d0a-us17',
+              'Authorization': `randomUser ${mailchimpKey}`,
               'Content-Type': 'application/json'
             }
           });
