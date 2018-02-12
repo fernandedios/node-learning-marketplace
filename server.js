@@ -14,16 +14,13 @@ const app = express();
 const secret = require('./config/secret');
 const userMiddleware = require('./middlewares/userMiddleware');
 
-mongoose.connect(secret.database, (err) => {
-  if(err) {
-    console.log(err);
-  }
-  else {
-    console.log('Connected to DB');
-  }
-});
+// database connection
+mongoose.connect(secret.database).then(() => {
+  console.log('Connected to DB');
+}, err => console.log(err));
 
-app.use(express.static(__dirname + '/public'));
+// middlewares
+app.use(express.static(`${__dirname}/public`));
 app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 
