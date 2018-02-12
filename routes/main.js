@@ -1,5 +1,3 @@
-const async = require('async');
-
 const Course = require('../models/course');
 const User = require('../models/user');
 
@@ -14,45 +12,24 @@ module.exports = (app) => {
     });
   });
 
-  app.get('/courses/:id', (req, res, next) => {
-    async.parallel([
-      (callback) => {
-        Course.findOne({ _id: req.params.id })
-          .populate('ownByStudent.user')
-          .exec((err, foundCourse) => {
-            callback(err, foundCourse);
-          });
-      },
+  app.get('/courses/:id', async (req, res, next) => {
 
-      (callback) => {
-        // see if user has already taken the course
-        User.findOne({ _id: req.user.id, 'coursesTaken.course': req.params.id })
-          // fetch details of course
-          .populate('coursesTaken.course')
-          .exec((err, foundUserCourse) => {
-            callback(err, foundUserCourse);
-          });
-      },
+    try {
+      const course = await Course.findOne({ _id: req.params.id })
+        .populate('ownByStudent.user')
+        .exec();
 
-      (callback) => {
-        // see if user made the course
-        User.findOne({ _id: req.user.id, 'coursesTeach.course': req.params.id })
-          // fetch details of course
-          .populate('coursesTeach.course')
-          .exec((err, foundUserCourse) => {
-            callback(err, foundUserCourse);
-          });
-      }
+      // see if user has already taken the course
+      const userCourse = await User.findOne({ _id: req.user.id, 'coursesTeach.course': req.params.id })
+        // fetch details of course
+        .populate('coursesTeach.course')
+        .exec();
 
-    ], (err, results) => {
-      // from first fn
-      const course = results[0];
-
-      // from 2nd fn
-      const userCourse = results[1];
-
-      // from 3rd fn
-      const teacherCourse = results[2];
+      // see if user made the course
+      const teacherCourse = await User.findOne({ _id: req.user.id, 'coursesTeach.course': req.params.id })
+        // fetch details of course
+        .populate('coursesTeach.course')
+        .exec();
 
       // user is not taking course, and is not the teacher
       if (userCourse === null && teacherCourse === null) {
@@ -68,7 +45,9 @@ module.exports = (app) => {
       else {
         res.render('courses/course', { course });
       }
-
-    });
+    }
+    catch (err) {
+      return next(err);
+    }
   });
 };
