@@ -1,10 +1,8 @@
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
+const axios = require('axios');
 
 const { facebook } = require('../config/secret');
-const async = require('async');
-const request = require('request');
-
 const User = require('../models/user')
 
 // store id to session
@@ -19,61 +17,45 @@ passport.deserializeUser((id, done) => {
   });
 });
 
-// middleware
-passport.use(new FacebookStrategy(facebook, (req, token, refreshToken, profile, done) => {
-  User.findOne({ facebook: profile.id }, (err, user) => {
-    if(err) {
-      return done(err);
-    }
+// passport config for facebook strategy
+passport.use(new FacebookStrategy(facebook, async (req, token, refreshToken, profile, done) => {
+  try {
+    const user = await User.findOne({ facebook: profile.id });
 
-    if(user) {
+    if (user) {
       req.flash('loginMessage', 'Successfully logged in with Facebook'); // send message to ejs
-
       return done(null, user);
     }
     else {
-      // execute array of functions in series
-      async.waterfall([
-        (callback) => {
-          const newUser = new User();
-          newUser.email = profile._json.email;
-          newUser.facebook = profile.id;
-          newUser.tokens.push({ kind: 'facebook', token });
-          newUser.profile.name = profile.displayName;
-          newUser.profile.picture = `https://graph.facebook.com/${profile.id}/picture?type=large`;
+      // get user details
+      const newUser = new User();
+      newUser.email = profile._json.email;
+      newUser.facebook = profile.id;
+      newUser.tokens.push({ kind: 'facebook', token });
+      newUser.profile.name = profile.displayName;
+      newUser.profile.picture = `https://graph.facebook.com/${profile.id}/picture?type=large`;
 
-          newUser.save((err) => {
-            if(err) throw err;
+      try {
+        await newUser.save();
+        await axios.post('https://us17.api.mailchimp.com/3.0/lists/2cc6af2c3b/members',
+          {
+            email_address: newUser.email,
+            status: 'subscribed',
 
-            req.flash('loginMessage', 'Successfully logged in with Facebook');
-            callback(err, newUser);
-          });
-        },
-
-        (newUser, callback) => {
-          // mailchimp request
-          request({
-            url: 'https://us17.api.mailchimp.com/3.0/lists/2cc6af2c3b/members',
-            method: 'POST',
             headers: {
               'Authorization': 'randomUser 4b646e1d71f19f745f5fbf99cf803d0a-us17',
               'Content-Type': 'application/json'
-            },
-            json: {
-              'email_address': newUser.email,
-              'status': 'subscribed'
-            }
-          }, (err, response, body) => {
-            if (err) {
-              return done(err, newUser);
-            }
-            else {
-              console.log('Success');
-              return done(null, newUser);
             }
           });
-        }
-      ]);
+
+        return done(null, newUser);
+      }
+      catch (err) {
+        return done(err, newUser);
+      }
     }
-  });
+  }
+  catch (err) {
+    return done(err);
+  }
 }));
