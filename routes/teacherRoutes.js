@@ -94,7 +94,7 @@ module.exports = (app) => {
       let revenue = 0;
       User.findOne({ _id: req.user._id }, (err, foundUser) => {
         foundUser.revenue.forEach((value) => {
-          revenue += value;
+          revenue += parseInt(value.money) / 100;
         });
 
         res.render('teacher/revenue-report', { revenue });
