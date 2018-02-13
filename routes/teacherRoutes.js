@@ -1,11 +1,12 @@
 const User = require('../models/user');
 const Course = require('../models/course');
+const requireLogin = require('../middlewares/requireLogin');
 
 module.exports = (app) => {
   // parent route
   app.route('/become-an-instructor')
     // render page
-    .get((req, res, next) => {
+    .get(requireLogin, (req, res, next) => {
       res.render('teacher/become-instructor');
     })
 
@@ -29,7 +30,7 @@ module.exports = (app) => {
       }
     });
 
-    app.get('/teacher/dashboard', (req, res, next) => {
+    app.get('/teacher/dashboard', requireLogin, (req, res, next) => {
       User.findOne({ _id: req.user.id })
         .populate('coursesTeach.course') // get/populate data for the coursesTeach.course objects
         .exec((err, foundUser) => { // pass callback
@@ -40,7 +41,7 @@ module.exports = (app) => {
     // parent route
     app.route('/create-course')
       // render page
-      .get((req, res, next) => {
+      .get(requireLogin, (req, res, next) => {
         res.render('teacher/create-course');
       })
 
@@ -67,7 +68,7 @@ module.exports = (app) => {
       });
 
     app.route('/edit-course/:id')
-      .get((req, res, next) => {
+      .get(requireLogin, (req, res, next) => {
         Course.findOne({ _id: req.params.id }, (err, foundCourse) => {
           res.render('teacher/edit-course', { course: foundCourse });
         });
@@ -90,7 +91,7 @@ module.exports = (app) => {
         });
       });
 
-    app.get('/revenue-report', (req, res, next) => {
+    app.get('/revenue-report', requireLogin, (req, res, next) => {
       let revenue = 0;
       User.findOne({ _id: req.user._id }, (err, foundUser) => {
         foundUser.revenue.forEach((value) => {
