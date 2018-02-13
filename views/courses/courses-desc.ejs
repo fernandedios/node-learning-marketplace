@@ -10,18 +10,23 @@
           <p><%= course.desc %></p>
           <div class="row">
             <div class="col-lg-6 col-md-offset-3">
-              <form action="/payment" method="POST">
-                <input type="hidden" name="courseId" value="<%= course._id %>">
-                <script
-                  src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                  data-key="pk_test_MtUntAiIwyeqm7njBAOdkqKg"
-                  data-amount="<%= course.price %>"
-                  data-name="elearning"
-                  data-description="Widget"
-                  data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-                  data-locale="auto">
-                </script>
-              </form>
+              <% if (user) { %>
+                <form action="/payment" method="POST">
+                 <input type="hidden" name="courseId" value="<%= course._id %>">
+                 <script
+                   src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                   data-key="pk_test_MtUntAiIwyeqm7njBAOdkqKg"
+                   data-amount="<%= course.price %>"
+                   data-name="elearning"
+                   data-description="Widget"
+                   data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                   data-locale="auto">
+                 </script>
+               </form>
+              <% } else { %>
+                <p><a class="btn btn-primary btn-lg" href="/login" role="button">Login to Buy Course &raquo;</a></p>
+              <% } %>
+
             </div>
           </div>
         </div>
