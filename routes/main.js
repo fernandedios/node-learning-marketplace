@@ -1,5 +1,6 @@
 const Course = require('../models/course');
 const User = require('../models/user');
+const requireLogin = require('../middlewares/requireLogin');
 
 module.exports = (app) => {
   app.get('/', (req, res, next) => {
@@ -12,7 +13,7 @@ module.exports = (app) => {
     });
   });
 
-  app.get('/courses/:id', async (req, res, next) => {
+  app.get('/courses/:id', requireLogin, async (req, res, next) => {
 
     try {
       const course = await Course.findOne({ _id: req.params.id })

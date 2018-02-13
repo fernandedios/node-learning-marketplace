@@ -3,58 +3,54 @@
 <div class="container py-4">
   <div class="row">
     <div class="col">
-      <div class="bg"></div>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col">
-
-      <div class="row">
-        <div class="col-lg-6 col-md-offset-3">
-          <form action="/payment" method="POST">
-            <input type="hidden" name="courseId" value="<%= course._id %>">
-            <script
-              src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-              data-key="pk_test_MtUntAiIwyeqm7njBAOdkqKg"
-              data-amount="<%= course.price %>"
-              data-name="elearning"
-              data-description="Widget"
-              data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-              data-locale="auto">
-            </script>
-          </form>
+      <div class="jumbotron">
+        <div class="container">
+          <h3 class="display-5"><%= course.title %></h3>
+          <p><%= course.desc %></p>
+          <div class="row">
+            <div class="col-lg-6 col-md-offset-3">
+              <form action="/payment" method="POST">
+                <input type="hidden" name="courseId" value="<%= course._id %>">
+                <script
+                  src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                  data-key="pk_test_MtUntAiIwyeqm7njBAOdkqKg"
+                  data-amount="<%= course.price %>"
+                  data-name="elearning"
+                  data-description="Widget"
+                  data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                  data-locale="auto">
+                </script>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
 
       <hr>
 
       <div class="row">
-        <div class="col-lg-7">
-          <h2>Description</h2>
-          <p><%= course.desc %></p>
-        </div>
-
-        <div class="col-lg-7">
-          <h2>Enrolled Students</h2>
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              Students
-            </div>
-            <div class="panel-body">
-              <% if (course.ownByStudent.length === 0) { %>
-                <p>0</p>
-              <% } else { %>
-                <% for(var i = 0; i < course.ownByStudent.length; i++) { %>
-                  <div class="col-xs-2">
-                    <img src="<%= course.ownByStudent[i].user.profile.picture %>" />
-                  </div>
+        <div class="col">
+          <h5>Enrolled Students</h5>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Students</h5>
+              <div class="card-text">
+                <% if (course.ownByStudent.length === 0) { %>
+                  <p>0</p>
+                <% } else { %>
+                  <% for(var i = 0; i < course.ownByStudent.length; i++) { %>
+                    <div class="col-xs-2">
+                      <img src="<%= course.ownByStudent[i].user.profile.picture %>" />
+                    </div>
+                  <% } %>
                 <% } %>
-              <% } %>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </div>
