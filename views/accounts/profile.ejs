@@ -12,8 +12,16 @@
         </div>
       <% } %>
 
-      <p><%= user.profile.name %></p>
-      <img src="<%= user.profile.picture %>">
+      <h4><%= user.profile.name %></h4>
+      <p><%= user.profile.title %></p>
+      <div class="row pt-3">
+        <div class="col-md-3">
+          <img src="<%= user.profile.picture %>" class="rounded-circle w-100">
+        </div>
+        <div class="col-md-9">
+          <p><%= user.profile.desc %></p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
