@@ -25,6 +25,7 @@ module.exports = (app) => {
 
   app.route('/profile/edit')
     .get(requireLogin, (req, res, next) => {
+      console.log(req.user);
       res.render('accounts/profile-edit', { user: req.user });
     })
     .post(requireLogin, async (req, res, next) => {
