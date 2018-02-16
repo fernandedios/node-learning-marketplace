@@ -2,6 +2,8 @@ const passport = require('passport');
 const passportConf = require('../middlewares/passport');
 const requireLogin = require('../middlewares/requireLogin');
 
+const User = require('../models/user');
+
 module.exports = (app) => {
   app.get('/login', (req, res, next) => {
     res.render('accounts/login');
@@ -37,7 +39,8 @@ module.exports = (app) => {
         if (req.body.picture) foundUser.profile.picture = req.body.picture;
         if (req.body.desc) foundUser.profile.desc = req.body.desc;
 
-        await foundCourse.save();
+        await foundUser.save();
+        res.redirect('/profile');
       }
       catch (err) {
         return next(err);
