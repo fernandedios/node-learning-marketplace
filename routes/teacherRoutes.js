@@ -7,13 +7,17 @@ module.exports = (app) => {
   app.route('/become-an-instructor')
     // render page
     .get(requireLogin, (req, res, next) => {
-      res.render('teacher/become-instructor');
+      res.render('teacher/create-course');
     })
 
     // create new course
     .post(async (req, res, next) => {
       let course = new Course();
       course.title = req.body.title;
+      course.price = req.body.price * 1000; // convert to cents for stripe
+      course.desc = req.body.desc;
+      course.wistiaId = req.body.wistiaId;
+      course.ownByTeacher = req.user._id;
 
       try {
         await course.save();
@@ -49,7 +53,7 @@ module.exports = (app) => {
       .post(async (req, res, next) => {
         let course = new Course();
         course.title = req.body.title;
-        course.price = req.body.price;
+        course.price = req.body.price * 1000; // convert to cents for stripe
         course.desc = req.body.desc;
         course.wistiaId = req.body.wistiaId;
         course.ownByTeacher = req.user._id;
@@ -80,7 +84,7 @@ module.exports = (app) => {
             // update only if value is found
             if (req.body.title) foundCourse.title = req.body.title;
             if (req.body.wistiaId) foundCourse.wistiaId = req.body.wistiaId;
-            if (req.body.price) foundCourse.price = req.body.price;
+            if (req.body.price) foundCourse.price = req.body.price * 1000; // convert to cents for stripe
             if (req.body.desc) foundCourse.desc = req.body.desc;
 
             foundCourse.save((err) => {
