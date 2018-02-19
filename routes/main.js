@@ -28,7 +28,7 @@ module.exports = (app) => {
         // check if user is logged in
         if (req.user) {
           // see if user has already taken the course
-          const userCourse = await User.findOne({ _id: req.user.id, 'coursesTeach.course': req.params.id })
+          const userCourse = await User.findOne({ _id: req.user.id, 'coursesTaken.course': req.params.id })
             // fetch details of course
             .populate('coursesTeach.course')
             .exec();
