@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const CourseSchema = new Schema({
   title: String,
   desc: String,
+  thumbnail: String,
   wistiaId: String,
   price: Number,
   features: [
