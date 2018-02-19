@@ -2,8 +2,15 @@ const Course = require('../models/course');
 const User = require('../models/user');
 
 module.exports = (app) => {
-  app.get('/', (req, res, next) => {
-    res.render('main/home');
+  app.get('/', async (req, res, next) => {
+    try {
+      const courses = await Course.find({}).sort('-date').limit(3);
+    }
+    catch (err) {
+      return next(err);
+    }
+
+    res.render('main/home', { courses });
   });
 
   app.get('/courses', (req, res, next) => {
