@@ -2,15 +2,15 @@ const Course = require('../models/course');
 const User = require('../models/user');
 
 module.exports = (app) => {
-  app.get('/', async (req, res, next) => {
-    try {
-      const courses = await Course.find({}).sort('-date').limit(3);
-    }
-    catch (err) {
-      return next(err);
-    }
+  app.get('/', (req, res, next) => {
+      Course.find({})
+        .sort({ _id: -1 })
+        .limit(3)
+        .exec((err, courses) => {
+          if (err) return next(err);
 
-    res.render('main/home', { courses });
+          res.render('main/home', { courses });
+        });
   });
 
   app.get('/courses', (req, res, next) => {
