@@ -14,8 +14,8 @@
         <% for (var i = 0; i < courses.length; i++) { %>
           <div class="col-md-4">
             <div class="card" style="width: 100%">
-              <img class="card-img-top" src="/img/<%= courses[i].thumbnail %>" alt="<%= courses[i].title %>">
-              <div class="card-header">
+              <img class="card-img-top" src="/imgs/<%= courses[i].thumbnail %>" alt="<%= courses[i].title %>">
+              <div class="card-header text-center">
                 <a href="/courses/<%=  courses[i]._id %>">
                   <%= courses[i].title %>
                 </a>
