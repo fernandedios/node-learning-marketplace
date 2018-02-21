@@ -6,27 +6,36 @@
 
       <div class="jumbotron">
         <div class="container">
-          <h3 class="display-5"><%= course.title %></h3>
-          <p><%= course.desc %></p>
           <div class="row">
-            <div class="col-lg-6 col-md-offset-3">
-              <% if (user) { %>
-                <form action="/payment" method="POST">
-                 <input type="hidden" name="courseId" value="<%= course._id %>">
-                 <script
-                   src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                   data-key="pk_test_MtUntAiIwyeqm7njBAOdkqKg"
-                   data-amount="<%= course.price %>"
-                   data-name="elearning"
-                   data-description="Widget"
-                   data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-                   data-locale="auto">
-                 </script>
-               </form>
-              <% } else { %>
-                <p><a class="btn btn-primary btn-lg" href="/login" role="button">Login to Buy Course &raquo;</a></p>
-              <% } %>
+            <div class="col-md-5">
+              <img src="/imgs/<%= course.thumbnail %>" class="img-fluid">
+            </div>
 
+            <div class="col-md-7">
+              <h3 class="display-5"><%= course.title %></h3>
+              <p><%= course.desc %></p>
+              <div class="row">
+                <div class="col-lg-6 col-md-offset-3">
+                  <p>Price: $<%= course.price / 1000 %></p>
+                  <% if (user) { %>
+                    <form action="/payment" method="POST">
+                     <input type="hidden" name="courseId" value="<%= course._id %>">
+                     <script
+                       src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                       data-key="pk_test_MtUntAiIwyeqm7njBAOdkqKg"
+                       data-amount="<%= course.price %>"
+                       data-name="elearning"
+                       data-description="Widget"
+                       data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                       data-locale="auto">
+                     </script>
+                   </form>
+                  <% } else { %>
+                    <p><a class="btn btn-primary btn-lg" href="/login" role="button">Login to Buy Course &raquo;</a></p>
+                  <% } %>
+
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -36,10 +45,9 @@
 
       <div class="row">
         <div class="col">
-          <h5>Enrolled Students</h5>
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Students</h5>
+              <h5 class="card-title"><h5>Enrolled Students</h5></h5>
               <div class="card-text">
                 <% if (course.ownByStudent.length === 0) { %>
                   <p>0</p>

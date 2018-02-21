@@ -22,7 +22,8 @@
         <% courses.forEach((course) => { %>
           <div class="col-md-4">
             <div class="card" style="width: 100%">
-              <div class="card-header">
+              <img class="card-img-top" src="/imgs/<%= course.thumbnail %>" alt="<%= course.title %>">
+              <div class="card-header text-center">
                 <a href="/courses/<%=  course._id %>">
                   <%= course.title %>
                 </a>
