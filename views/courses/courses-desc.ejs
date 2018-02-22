@@ -44,23 +44,15 @@
       <hr>
 
       <div class="row pb-5 pt-3">
-        <div class="col">
-          <h3>About the Instructor</h3>
-          <h4><%= course.ownByTeacher.profile.name %></h4>
-          <p><%= course.ownByTeacher.profile.title %></p>
-          <div class="row">
-            <div class="col-md-2">
-              <img class="rounded-circle w-100" src="<%= course.ownByTeacher.profile.picture %>" />
-            </div>
-            <div class="col-md-10">
-              <%= course.ownByTeacher.profile.desc %>
-            </div>
-          </div>
+        <div class="col-md-6">
+          <h4>Course Details</h4>
+          <h5>Video Duration: <%= course.videoLength %> hours</h5>
+          <h5>Language: <%= course.language %></h5>
+          <h5>Requirements</h5>
+          <%- course.requirements %>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col">
+        <div class="col-md-6">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title"><h5>Enrolled Students</h5></h5>
@@ -75,6 +67,24 @@
                   <% } %>
                 <% } %>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="row pb-5 pt-3">
+        <div class="col">
+          <h4>About the Instructor</h4>
+          <h5><%= course.ownByTeacher.profile.name %></h5>
+          <p><%= course.ownByTeacher.profile.title %></p>
+          <div class="row">
+            <div class="col-2">
+              <img class="rounded-circle w-100" src="<%= course.ownByTeacher.profile.picture %>" />
+            </div>
+            <div class="col-10">
+              <%= course.ownByTeacher.profile.desc %>
             </div>
           </div>
         </div>
