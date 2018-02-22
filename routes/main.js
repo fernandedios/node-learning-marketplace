@@ -23,7 +23,10 @@ module.exports = (app) => {
       try {
         const course = await Course.findOne({ _id: req.params.id })
           .populate('ownByStudent.user')
+          .populate('ownByTeacher')
           .exec();
+
+        console.log(course);
 
         // check if user is logged in
         if (req.user) {

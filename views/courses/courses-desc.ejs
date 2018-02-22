@@ -43,6 +43,22 @@
 
       <hr>
 
+      <div class="row pb-5 pt-3">
+        <div class="col">
+          <h3>About the Instructor</h3>
+          <h4><%= course.ownByTeacher.profile.name %></h4>
+          <p><%= course.ownByTeacher.profile.title %></p>
+          <div class="row">
+            <div class="col-md-2">
+              <img class="rounded-circle w-100" src="<%= course.ownByTeacher.profile.picture %>" />
+            </div>
+            <div class="col-md-10">
+              <%= course.ownByTeacher.profile.desc %>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="row">
         <div class="col">
           <div class="card">
@@ -53,8 +69,8 @@
                   <p>0</p>
                 <% } else { %>
                   <% for(var i = 0; i < course.ownByStudent.length; i++) { %>
-                    <div class="col-xs-2">
-                      <img src="<%= course.ownByStudent[i].user.profile.picture %>" />
+                    <div class="col-sm-2">
+                      <img class="img-fluid" src="<%= course.ownByStudent[i].user.profile.picture %>" />
                     </div>
                   <% } %>
                 <% } %>
