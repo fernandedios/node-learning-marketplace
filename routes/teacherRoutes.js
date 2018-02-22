@@ -17,6 +17,9 @@ module.exports = (app) => {
       course.price = req.body.price * 1000; // convert to cents for stripe
       course.desc = req.body.desc;
       course.thumbnail = req.body.thumbnail;
+      course.requirements = req.body.requirements;
+      course.videoLength = req.body.videoLength;
+      course.language = req.body.language;
       course.wistiaId = req.body.wistiaId;
       course.ownByTeacher = req.user._id;
 
@@ -57,6 +60,9 @@ module.exports = (app) => {
         course.price = req.body.price * 1000; // convert to cents for stripe
         course.desc = req.body.desc;
         course.thumbnail = req.body.thumbnail;
+        course.requirements = req.body.requirements;
+        course.videoLength = req.body.videoLength;
+        course.language = req.body.language;
         course.wistiaId = req.body.wistiaId;
         course.ownByTeacher = req.user._id;
 
@@ -88,6 +94,9 @@ module.exports = (app) => {
             if (req.body.wistiaId) foundCourse.wistiaId = req.body.wistiaId;
             if (req.body.price) foundCourse.price = req.body.price * 1000; // convert to cents for stripe
             if (req.body.desc) foundCourse.desc = req.body.desc;
+            if (req.body.requirements) foundCourse.requirements = req.body.requirements;
+            if (req.body.videoLength) foundCourse.videoLength = req.body.videoLength;
+            if (req.body.language) foundCourse.language = req.body.language;
             if (req.body.thumbnail) foundCourse.thumbnail = req.body.thumbnail;
 
             foundCourse.save((err) => {
