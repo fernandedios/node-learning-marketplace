@@ -12,23 +12,43 @@
       <h3>Edit Course</h1>
       <form action="" method="post" role="form">
         <div class="form-group">
-          <label for="name">Title:</label>
+          <label for="title">Title:</label>
           <input type="text" name="title" id="title" class="form-control" placeholder="<%= course.title %>">
         </div>
 
         <div class="form-group">
-          <label for="name">Price (USD):</label>
+          <label for="name">Price: (USD)</label>
           <input type="text" name="price" id="price" class="form-control" placeholder="<%= course.price / 1000 %>">
         </div>
 
         <div class="form-group">
-          <label for="name">Description:</label>
-          <input type="text" name="desc" id="desc" class="form-control" placeholder="<%= course.desc %>">
+          <label for="desc">Description:</label>
+          <textarea class="form-control" name="desc" id="desc" rows="3" placeholder="<%= course.desc %>"></textarea>
         </div>
 
         <div class="form-group">
-          <label for="name">Thumbnail:</label>
+          <label for="requirements">Requirements:</label>
+          <textarea class="form-control" name="requirements" id="requirements" rows="3" placeholder="<%= course.requirements %>"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="language">Language:</label>
+          <select class="form-control" id="language" name="language">
+              <option value="English">English</option>
+              <option value="Chinese">Chinese</option>
+              <option value="Spanish">Spanish</option>
+              <option value="French">French</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+          <label for="thumbnail">Thumbnail:</label>
           <input type="text" name="thumbnail" id="thumbnail" class="form-control" placeholder="<%= course.thumbnail %>">
+        </div>
+
+        <div class="form-group">
+          <label for="videoLength">Video Duration:</label>
+          <input type="text" name="videoLength" id="videoLength" class="form-control" placeholder="<%= course.videoLength %>">
         </div>
 
         <div class="form-group">
@@ -41,3 +61,7 @@
     </div>
   </div>
 </div>
+
+<script>
+  $('#language').val("<%= course.language %>")
+</script>
