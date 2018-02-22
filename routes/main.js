@@ -26,8 +26,6 @@ module.exports = (app) => {
           .populate('ownByTeacher')
           .exec();
 
-        console.log(course);
-
         // check if user is logged in
         if (req.user) {
           // see if user has already taken the course
