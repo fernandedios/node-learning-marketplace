@@ -14,7 +14,7 @@ module.exports = (app) => {
     .post(async (req, res, next) => {
       let course = new Course();
       course.title = req.body.title;
-      course.price = req.body.price * 1000; // convert to cents for stripe
+      course.price = req.body.price * 100; // convert to cents for stripe
       course.desc = req.body.desc;
       course.thumbnail = req.body.thumbnail;
       course.requirements = req.body.requirements;
@@ -57,7 +57,7 @@ module.exports = (app) => {
       .post(async (req, res, next) => {
         let course = new Course();
         course.title = req.body.title;
-        course.price = req.body.price * 1000; // convert to cents for stripe
+        course.price = req.body.price * 100; // convert to cents for stripe
         course.desc = req.body.desc;
         course.thumbnail = req.body.thumbnail;
         course.requirements = req.body.requirements;
@@ -92,7 +92,7 @@ module.exports = (app) => {
             // update only if value is found
             if (req.body.title) foundCourse.title = req.body.title;
             if (req.body.wistiaId) foundCourse.wistiaId = req.body.wistiaId;
-            if (req.body.price) foundCourse.price = req.body.price * 1000; // convert to cents for stripe
+            if (req.body.price) foundCourse.price = req.body.price * 100; // convert to cents for stripe
             if (req.body.desc) foundCourse.desc = req.body.desc;
             if (req.body.requirements) foundCourse.requirements = req.body.requirements;
             if (req.body.videoLength) foundCourse.videoLength = req.body.videoLength;
