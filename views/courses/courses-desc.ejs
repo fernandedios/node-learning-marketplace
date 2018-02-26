@@ -16,14 +16,14 @@
               <p><%= course.desc %></p>
               <div class="row">
                 <div class="col-lg-6 col-md-offset-3">
-                  <p>Price: $<%= course.price / 1000 %></p>
+                  <p>Price: $<%= course.price %></p>
                   <% if (user) { %>
                     <form action="/payment" method="POST">
                      <input type="hidden" name="courseId" value="<%= course._id %>">
                      <script
                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                        data-key="pk_test_MtUntAiIwyeqm7njBAOdkqKg"
-                       data-amount="<%= course.price %>"
+                       data-amount="<%= course.price * 100 %>"
                        data-name="elearning"
                        data-description="Widget"
                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"

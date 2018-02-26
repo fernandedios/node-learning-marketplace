@@ -14,7 +14,7 @@ module.exports = (app) => {
     .post(async (req, res, next) => {
       let course = new Course();
       course.title = req.body.title;
-      course.price = req.body.price * 100; // convert to cents for stripe
+      course.price = req.body.price;
       course.desc = req.body.desc;
       course.thumbnail = req.body.thumbnail;
       course.requirements = req.body.requirements;
@@ -57,7 +57,7 @@ module.exports = (app) => {
       .post(async (req, res, next) => {
         let course = new Course();
         course.title = req.body.title;
-        course.price = req.body.price * 100; // convert to cents for stripe
+        course.price = req.body.price;
         course.desc = req.body.desc;
         course.thumbnail = req.body.thumbnail;
         course.requirements = req.body.requirements;
@@ -92,7 +92,7 @@ module.exports = (app) => {
             // update only if value is found
             if (req.body.title) foundCourse.title = req.body.title;
             if (req.body.wistiaId) foundCourse.wistiaId = req.body.wistiaId;
-            if (req.body.price) foundCourse.price = req.body.price * 100; // convert to cents for stripe
+            if (req.body.price) foundCourse.price = req.body.price;
             if (req.body.desc) foundCourse.desc = req.body.desc;
             if (req.body.requirements) foundCourse.requirements = req.body.requirements;
             if (req.body.videoLength) foundCourse.videoLength = req.body.videoLength;
@@ -111,7 +111,7 @@ module.exports = (app) => {
       let revenue = 0;
       User.findOne({ _id: req.user._id }, (err, foundUser) => {
         foundUser.revenue.forEach((value) => {
-          revenue += parseInt(value.money) / 100;
+          revenue += parseInt(value.money);
         });
 
         res.render('teacher/revenue-report', { revenue });
