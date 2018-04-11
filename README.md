@@ -47,7 +47,7 @@ module.exports = {
 };
 ```
 
-Save as 'dev.js' and place it inside the config folder. 
+Save as 'dev.js' and place it inside the config folder.
 
 ### Production Environment Variables
 You will need to add the following environment variables to your production host
@@ -61,6 +61,11 @@ FB_CLIENTID,
 FB_CLIENTSECRET,
 CALLBACK_URL,
 ```
+
+Preview
+---------
+Access the [application preview].
+
 
 Thanks
 ------
@@ -76,3 +81,4 @@ node-learning-marketplace* © 2018, Fernan de Dios. Released under the [MIT Lice
 [Mailchimp Account]: http://mailchimp.com/
 [Stripe Account]: https://stripe.com/
 [Wistia Account]: https://wistia.com/
+[application preview]: https://node-elearning.herokuapp.com/
